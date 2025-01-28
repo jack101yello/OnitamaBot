@@ -16,6 +16,7 @@ class Piece {
         Piece(int x_i, int y_i, int square_size_i, bool king, bool side_i);
         ~Piece();
         void draw(SDL_Renderer* renderer);
+        bool in_click_range(int click_x, int click_y);
 };
 
 #endif

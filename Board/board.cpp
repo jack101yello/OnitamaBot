@@ -1,26 +1,37 @@
 #include "board.h"
 
+
+// Board constructor
 Board::Board() {
     square_size = 100;
     board_x = 25;
     board_y = 25;
 
-    player1_pieces.push_back(Piece(2, 0, square_size, true, false));
-    player1_pieces.push_back(Piece(0, 0, square_size, false, false));
-    player1_pieces.push_back(Piece(1, 0, square_size, false, false));
-    player1_pieces.push_back(Piece(3, 0, square_size, false, false));
-    player1_pieces.push_back(Piece(4, 0, square_size, false, false));
-    player2_pieces.push_back(Piece(2, 4, square_size, true, true));
-    player2_pieces.push_back(Piece(0, 4, square_size, false, true));
-    player2_pieces.push_back(Piece(1, 4, square_size, false, true));
-    player2_pieces.push_back(Piece(3, 4, square_size, false, true));
-    player2_pieces.push_back(Piece(4, 4, square_size, false, true));
+    player1_pieces.push_back(new Piece(2, 0, square_size, true, false));
+    player1_pieces.push_back(new Piece(0, 0, square_size, false, false));
+    player1_pieces.push_back(new Piece(1, 0, square_size, false, false));
+    player1_pieces.push_back(new Piece(3, 0, square_size, false, false));
+    player1_pieces.push_back(new Piece(4, 0, square_size, false, false));
+    player2_pieces.push_back(new Piece(2, 0, square_size, true, true));
+    player2_pieces.push_back(new Piece(0, 0, square_size, false, true));
+    player2_pieces.push_back(new Piece(1, 0, square_size, false, true));
+    player2_pieces.push_back(new Piece(3, 0, square_size, false, true));
+    player2_pieces.push_back(new Piece(4, 0, square_size, false, true));
 }
 
+// Board destructor
 Board::~Board() {
-
+    for(Piece* p : player1_pieces) {
+        delete p;
+    }
+    player1_pieces.clear();
+    for(Piece* p : player2_pieces) {
+        delete p;
+    }
+    player2_pieces.clear();
 }
 
+// Draw the board to the screen
 void Board::draw(SDL_Renderer* renderer) {
     // Draw board
     SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 0xff);
@@ -31,13 +42,9 @@ void Board::draw(SDL_Renderer* renderer) {
         }
     }
 
-    // Draw player 1's pieces
+    // Draw pieces
     for(long unsigned int i = 0; i < player1_pieces.size(); i++) {
-        player1_pieces.at(i).draw(renderer);
-    }
-
-    // Draw player 2's pieces
-    for(long unsigned int i = 0; i < player2_pieces.size(); i++) {
-        player2_pieces.at(i).draw(renderer);
+        player1_pieces.at(i) -> draw(renderer);
+        player2_pieces.at(i) -> draw(renderer);
     }
 }

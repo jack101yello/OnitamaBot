@@ -10,8 +10,8 @@ class Board {
         int square_size;
         int board_x;
         int board_y;
-        std::vector<Piece> player1_pieces;
-        std::vector<Piece> player2_pieces;
+        std::vector<Piece *> player1_pieces;
+        std::vector<Piece *> player2_pieces;
 
     public:
         Board();
