@@ -26,7 +26,9 @@ Deck::~Deck() {
 
 // Shuffle the deck
 void Deck::shuffle() {
-    // Implement this (there's probably a nice method for this)
+    auto rd = std::random_device {};
+    auto rng = std::default_random_engine { rd() };
+    std::shuffle(std::begin(cards), std::end(cards), rng);
 }
 
 std::vector<Card*> Deck::deal() {

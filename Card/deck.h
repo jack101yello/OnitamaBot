@@ -2,6 +2,8 @@
 #define __deck_H
 
 #include <vector>
+#include <algorithm>
+#include <random>
 #include "card.h"
 #include "../Types/types.h"
 
