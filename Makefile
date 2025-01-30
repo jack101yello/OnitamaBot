@@ -6,10 +6,10 @@ CC := g++
 # set the compiler flags
 CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 -Wall -lSDL2_image -lSDL2_ttf -lm
 # add header files here
-HDRS := Board/board.h Piece/piece.h Button/button.h Textbox/textbox.h
+HDRS := Board/board.h Piece/piece.h Button/button.h Textbox/textbox.h Card/card.h Card/deck.h
 
 # add source files here
-SRCS := main.cpp Board/board.cpp Piece/piece.cpp Button/button.cpp Textbox/textbox.cpp
+SRCS := main.cpp Board/board.cpp Piece/piece.cpp Button/button.cpp Textbox/textbox.cpp Card/card.cpp Card/deck.cpp
 
 # generate names of object files
 OBJS := $(SRCS:.cpp=.o)

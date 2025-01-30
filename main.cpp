@@ -7,8 +7,8 @@
 #include "Button/button.h"
 #include "Textbox/textbox.h"
 
-#define WIDTH 1000
-#define HEIGHT 750
+#define WIDTH 1800
+#define HEIGHT 1000
 
 void player_vs_player(SDL_Window* window, SDL_Renderer* renderer);
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer);
@@ -16,12 +16,21 @@ void computer_training(SDL_Window* window, SDL_Renderer* renderer);
 void check_close(SDL_Window* window);
 void quit(SDL_Window* window);
 
+/*
+Select various running modes here
+This is for debugging and developing purposes
+*/
+#define SKIP_MENU_MODE
+
 int main(int argc, char* argv[]) {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("Error initializing SDL: %s\n", SDL_GetError());
     }
     if(TTF_Init() < 0) {
         printf("Error initializing TTF: %s\n", TTF_GetError());
+    }
+    if(!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+        printf("SDL_image could not initialize.\n");
     }
 
     SDL_Window *win = SDL_CreateWindow("Onitama", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
@@ -41,6 +50,9 @@ int main(int argc, char* argv[]) {
     int MouseX;
     int MouseY;
 
+    #ifdef SKIP_MENU_MODE
+    player_vs_player(win, renderer);
+    #else
     while(main_menu) {
         // Clear screen
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
@@ -95,6 +107,7 @@ int main(int argc, char* argv[]) {
 
         check_close(win);
     }
+    #endif
 
     quit(win);
 
@@ -119,7 +132,7 @@ void check_close(SDL_Window* window) {
 void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     bool running = true;
     
-    Board b;
+    Board b(WIDTH/10);
 
     while(running) {
         check_close(window);
