@@ -23,6 +23,7 @@ class Player {
         void set_enemy_cards(std::vector<Card*> enemy_cards_i) { enemy_cards = enemy_cards_i; }
         void set_neutral_card(Card* neutral_card_i) { neutral_card = neutral_card_i; }
         virtual Card* make_move();
+        std::vector<Piece*> get_my_pieces() { return my_pieces; }
         std::vector<Card*> get_my_cards() { return my_cards; }
 
     friend class Human_Player;

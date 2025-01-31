@@ -27,12 +27,6 @@ Game::~Game() {
 
 // Play one round of Onitama
 int Game::play_round() {
-    printf("Player 1 has cards: ");
-    printf(player1 -> get_my_cards().at(0) -> get_name());
-    printf(player1 -> get_my_cards().at(1) -> get_name());
-    printf("   Player 2 has cards: ");
-    printf(player2 -> get_my_cards().at(0) -> get_name());
-    printf(player2 -> get_my_cards().at(1) -> get_name());
     if(visual_mode) { // Draw to screen
         board -> draw(renderer);
         SDL_RenderPresent(renderer);
