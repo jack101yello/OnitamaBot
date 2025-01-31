@@ -121,7 +121,8 @@ Return value:
 */
 int Board::get_game_status() {
     /*
-    This method is to be implemented
+    This method is to be implemented.
+    The goal is to check the board to see if one of the players has won.
     */
    return 0;
 }

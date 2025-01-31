@@ -28,6 +28,7 @@ Game::~Game() {
 int Game::play_round() {
     if(visual_mode) {
         board -> draw(renderer);
+        SDL_RenderPresent(renderer);
     }
     Player* current_player = turn ? player1 : player2;
     Card* selected_card = current_player -> make_move();
