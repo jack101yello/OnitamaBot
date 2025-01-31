@@ -138,7 +138,7 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
 
     Human_Player* p1 = new Human_Player;
     Human_Player* p2 = new Human_Player;
-    Game game(p1, p2, 100, renderer);
+    Game game(p1, p2, 150, renderer);
 
     #ifdef VISUAL_MODE
     game.set_visual_mode(true);
@@ -146,7 +146,7 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     game.set_visual_mode(false):
     #endif
 
-    while(running) {
+    while(running) { // In future, this will probably just be Game::play_game(), which itself will contain a loop
         check_close(window);
 
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);

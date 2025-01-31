@@ -20,6 +20,7 @@ class Card {
         void add_move(move new_move);
         bool is_valid_move(move m);
         int get_index() { return index; }
+        const char* get_name() { return name; }
         bool operator==(const Card& other) const {
             return this -> index == other.index;
         }

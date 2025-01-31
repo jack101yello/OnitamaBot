@@ -25,19 +25,27 @@ Game::~Game() {
     delete board;
 }
 
+// Play one round of Onitama
 int Game::play_round() {
-    if(visual_mode) {
+    printf("Player 1 has cards: ");
+    printf(player1 -> get_my_cards().at(0) -> get_name());
+    printf(player1 -> get_my_cards().at(1) -> get_name());
+    printf("   Player 2 has cards: ");
+    printf(player2 -> get_my_cards().at(0) -> get_name());
+    printf(player2 -> get_my_cards().at(1) -> get_name());
+    if(visual_mode) { // Draw to screen
         board -> draw(renderer);
         SDL_RenderPresent(renderer);
     }
-    Player* current_player = turn ? player1 : player2;
-    Card* selected_card = current_player -> make_move();
-    board -> swap_cards(selected_card);
-    turn = !turn;
-    board -> set_turn(turn);
-    return board -> get_game_status();
+    Player* current_player = turn ? player1 : player2; // Whose turn is it?
+    Card* selected_card = current_player -> make_move(); // Figure out that player's move
+    board -> swap_cards(selected_card); // Exchange their played card for the neutral card
+    turn = !turn; // Reverse the turn for next time
+    board -> set_turn(turn); // Tell the board that we've switched sides
+    return board -> get_game_status(); // Check if someone has won
 }
 
+// Play a full game of Onitama
 Player* Game::play_game() {
     play_round();
     return nullptr;

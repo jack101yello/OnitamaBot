@@ -18,12 +18,12 @@ Piece::~Piece() {
 }
 
 int Piece::get_screen_x(bool current_player) {
-    int rel_x = (current_player) ? x : 4-x;
+    int rel_x = (current_player) ? 4-x : x;
     return (int)(board_x + (rel_x + 0.25) * square_size);
 }
 
 int Piece::get_screen_y(bool current_player) {
-    int rel_y = (current_player) ? y : 4-y;
+    int rel_y = (current_player) ? 4-y : y;
     return (int)(board_y + (rel_y + 0.25) * square_size);
 }
 

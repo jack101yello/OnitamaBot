@@ -68,22 +68,22 @@ void Board::draw(SDL_Renderer* renderer) {
     int card_left_gap = (int)(0.25 * square_size);
     int card_area_start = board_x + 5*square_size;
     SDL_Texture* card_image_texture = SDL_CreateTextureFromSurface(renderer, player1_cards.at(0) -> get_image_surface());
-    SDL_Rect r = {card_area_start + card_left_gap, board_y, card_width, card_height};
+    SDL_Rect r = {card_area_start + card_left_gap, board_y + ((turn) ? 2*card_vertical_gap : 0), card_width, card_height};
     SDL_RenderCopy(renderer, card_image_texture, NULL, &r);
     
     // P1 card 2
     card_image_texture = SDL_CreateTextureFromSurface(renderer, player1_cards.at(1) -> get_image_surface());
-    r = {card_area_start + card_left_gap + card_horizontal_gap, board_y, card_width, card_height};
+    r = {card_area_start + card_left_gap + card_horizontal_gap, board_y + ((turn) ? 2*card_vertical_gap : 0), card_width, card_height};
     SDL_RenderCopy(renderer, card_image_texture, NULL, &r);
 
     // P2 card 1
     card_image_texture = SDL_CreateTextureFromSurface(renderer, player2_cards.at(0) -> get_image_surface());
-    r = {card_area_start + card_left_gap, board_y + 2 * card_vertical_gap, card_width, card_height};
+    r = {card_area_start + card_left_gap, board_y + ((turn) ? 0 : 2*card_vertical_gap), card_width, card_height};
     SDL_RenderCopy(renderer, card_image_texture, NULL, &r);
     
     // P2 card 2
     card_image_texture = SDL_CreateTextureFromSurface(renderer, player2_cards.at(1) -> get_image_surface());
-    r = {card_area_start + card_left_gap + card_horizontal_gap, board_y + 2 * card_vertical_gap, card_width, card_height};
+    r = {card_area_start + card_left_gap + card_horizontal_gap, board_y + ((turn) ? 0 : 2*card_vertical_gap), card_width, card_height};
     SDL_RenderCopy(renderer, card_image_texture, NULL, &r);
 
     // Neutral card
