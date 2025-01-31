@@ -6,6 +6,9 @@
 #include "Board/board.h"
 #include "Button/button.h"
 #include "Textbox/textbox.h"
+#include "Game/game.h"
+#include "Player/player.h"
+#include "Player/human_player.h"
 
 #define WIDTH 1800
 #define HEIGHT 1000
@@ -21,6 +24,7 @@ Select various running modes here
 This is for debugging and developing purposes
 */
 #define SKIP_MENU_MODE
+#define VISUAL_MODE
 
 int main(int argc, char* argv[]) {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -131,8 +135,16 @@ void check_close(SDL_Window* window) {
 
 void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     bool running = true;
-    
-    Board b(WIDTH/10);
+
+    Human_Player* p1 = new Human_Player;
+    Human_Player* p2 = new Human_Player;
+    Game game(p1, p2, 100, renderer);
+
+    #ifdef VISUAL_MODE
+    game.set_visual_mode(true);
+    #else
+    game.set_visual_mode(false):
+    #endif
 
     while(running) {
         check_close(window);
@@ -140,10 +152,13 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer);
 
-        b.draw(renderer);
+        game.play_game();
         
         SDL_RenderPresent(renderer);
     }
+
+    delete p1;
+    delete p2;
 }
 
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {

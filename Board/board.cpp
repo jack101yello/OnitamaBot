@@ -26,6 +26,8 @@ Board::Board(int square_size_i) {
     player2_cards.push_back(active_cards.at(2));
     player2_cards.push_back(active_cards.at(3));
     neutral_card = active_cards.at(4);
+
+    turn = true;
 }
 
 // Board destructor
@@ -53,8 +55,8 @@ void Board::draw(SDL_Renderer* renderer) {
 
     // Draw pieces
     for(long unsigned int i = 0; i < player1_pieces.size(); i++) {
-        player1_pieces.at(i) -> draw(renderer);
-        player2_pieces.at(i) -> draw(renderer);
+        player1_pieces.at(i) -> draw(renderer, turn);
+        player2_pieces.at(i) -> draw(renderer, !turn);
     }
 
     // Draw the cards
@@ -88,4 +90,38 @@ void Board::draw(SDL_Renderer* renderer) {
     card_image_texture = SDL_CreateTextureFromSurface(renderer, neutral_card -> get_image_surface());
     r = {card_area_start + card_left_gap + (int)(0.25 * (card_width + card_horizontal_gap)), board_y + card_vertical_gap, card_width, card_height};
     SDL_RenderCopy(renderer, card_image_texture, NULL, &r);
+}
+
+// Swap the passed card with the neutral card
+void Board::swap_cards(Card* selected_card) {
+    Card* temp = neutral_card;
+    neutral_card = selected_card;
+    if(selected_card == player1_cards.at(0)) {
+        player1_cards.at(0) = temp;
+    }
+    else if(selected_card == player1_cards.at(1)) {
+        player1_cards.at(1) = temp;
+    }
+    else if(selected_card == player2_cards.at(0)) {
+        player2_cards.at(0) = temp;
+    }
+    else if(selected_card == player2_cards.at(1)) {
+        player2_cards.at(1) = temp;
+    }
+    else {
+        printf("An error has occurred during the card swap.\n");
+    }
+}
+
+/*
+Return value:
+0 - Game continuing
+-1 - Player 1 victory
+1 - Player 2 victory
+*/
+int Board::get_game_status() {
+    /*
+    This method is to be implemented
+    */
+   return 0;
 }

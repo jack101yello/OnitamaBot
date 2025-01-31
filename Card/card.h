@@ -18,6 +18,11 @@ class Card {
         ~Card();
         SDL_Surface* get_image_surface() { return card_image_surface; }
         void add_move(move new_move);
+        bool is_valid_move(move m);
+        int get_index() { return index; }
+        bool operator==(const Card& other) const {
+            return this -> index == other.index;
+        }
 };
 
 #endif
