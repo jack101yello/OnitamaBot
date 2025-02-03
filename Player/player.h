@@ -4,6 +4,7 @@
 #include <vector>
 #include "../Piece/piece.h"
 #include "../Card/card.h"
+#include "../Board/board.h"
 
 class Player {
     private:
@@ -22,7 +23,7 @@ class Player {
         void set_my_cards(std::vector<Card*> my_cards_i) { my_cards = my_cards_i; }
         void set_enemy_cards(std::vector<Card*> enemy_cards_i) { enemy_cards = enemy_cards_i; }
         void set_neutral_card(Card* neutral_card_i) { neutral_card = neutral_card_i; }
-        virtual Card* make_move();
+        virtual Card* make_move(Board* board, SDL_Renderer* renderer);
         std::vector<Piece*> get_my_pieces() { return my_pieces; }
         std::vector<Card*> get_my_cards() { return my_cards; }
 

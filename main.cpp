@@ -46,10 +46,12 @@ int main(int argc, char* argv[]) {
 
     bool main_menu = true;
 
-    Textbox mainmenu_title(WIDTH/2 - 100, 25, 200, 75, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, "ONITAMA", font);
-    Button pvp_button(WIDTH/2 - 200, 125, 400, 50, "Player v. Player", font);
-    Button pvc_button(WIDTH/2 - 200, 225, 400, 50, "Play Bot", font);
-    Button cvc_button(WIDTH/2 - 200, 325, 400, 50, "Bot Training", font);
+    #ifndef SKIP_MENU_MODE
+    Textbox mainmenu_title(WIDTH/2 - 100, 25, 200, 75, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, "ONITAMA");
+    Button pvp_button(WIDTH/2 - 200, 125, 400, 50, "Player v. Player");
+    Button pvc_button(WIDTH/2 - 200, 225, 400, 50, "Play Bot");
+    Button cvc_button(WIDTH/2 - 200, 325, 400, 50, "Bot Training");
+    #endif
 
     int MouseX;
     int MouseY;
@@ -64,9 +66,9 @@ int main(int argc, char* argv[]) {
 
         // Print buttons to screen
         mainmenu_title.draw(renderer);
-        pvp_button.draw(win, renderer, font);
-        pvc_button.draw(win, renderer, font);
-        cvc_button.draw(win, renderer, font);
+        pvp_button.draw(renderer, font);
+        pvc_button.draw(renderer, font);
+        cvc_button.draw(renderer, font);
 
         // Make choice
         int game_mode = -1;
@@ -145,6 +147,8 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     #else
     game.set_visual_mode(false):
     #endif
+
+    game.play_game();
 
     while(running) { // In future, this will probably just be Game::play_game(), which itself will contain a loop
         check_close(window);

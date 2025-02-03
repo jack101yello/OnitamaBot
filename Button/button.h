@@ -10,9 +10,9 @@ class Button {
         Textbox* textbox;
 
     public:
-        Button(int x_i, int y_i, int w_i, int h_i, const char* message_i, TTF_Font* font);
+        Button(int x_i, int y_i, int w_i, int h_i, const char* message_i);
         ~Button();
-        void draw(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font);
+        void draw(SDL_Renderer* renderer);
         bool in_click_range(int click_x, int click_y);
 };
 

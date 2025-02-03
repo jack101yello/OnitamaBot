@@ -7,6 +7,7 @@
 #include "../Piece/piece.h"
 #include "../Card/card.h"
 #include "../Card/deck.h"
+#include "../Types/types.h"
 
 class Board {
     private:
@@ -33,6 +34,12 @@ class Board {
         void swap_cards(Card* selected_card);
         int get_game_status();
         void set_turn(bool turn_i) { turn = turn_i; }
+        bool card_clicked(int MouseX, int MouseY, bool left_card);
+        move get_square_from_mouse(int MouseX, int MouseY);
+        move get_move_from_mouse(int piece_x, int piece_y, int MouseX, int MouseY);
+        int get_board_x() { return board_x; }
+        int get_board_y() { return board_y; }
+        int get_square_size() { return square_size; }
 };
 
 #endif

@@ -8,19 +8,137 @@ Human_Player::~Human_Player() {
 
 }
 
-Card* Human_Player::make_move() {
-    bool waiting_for_move = true;
-    while(waiting_for_move) {
+/*
+All of the logic for making a move.
+This method returns a pointer to the card that was selected.
+It should also implicitly move the piece that was moved.
+*/
+Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
+    Button restart_turn_button(board->get_board_x()+6*board->get_square_size(), board->get_board_y() + board->get_square_size()*6, 300, 50, "Restart Turn");
+    restart_turn_button.draw(renderer);
+
+    bool waiting_for_card = true;
+    int MouseX = 0;
+    int MouseY = 0;
+
+    Card* chosen_card = nullptr;
+
+    while(waiting_for_card) {
+        Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Card");
+        textbox.draw(renderer);
+        SDL_RenderPresent(renderer);
         SDL_Event event;
         SDL_WaitEvent(&event);
         switch(event.type) {
+            case SDL_MOUSEMOTION:
+                MouseX = event.motion.x;
+                MouseY = event.motion.y;
+                break;
             case SDL_MOUSEBUTTONDOWN:
-                waiting_for_move = false;
+                if(restart_turn_button.in_click_range(MouseX, MouseY)) {
+                    return make_move(board, renderer); // Start the turn over
+                }
+                if(board -> card_clicked(MouseX, MouseY, true)) { // Left card clicked
+                    chosen_card = my_cards.at(0);
+                    waiting_for_card = false;
+                }
+                else if(board -> card_clicked(MouseX, MouseY, false)) { // Right card clicked
+                    chosen_card = my_cards.at(1);
+                    waiting_for_card = false;
+                }
                 break;
             case SDL_QUIT:
                 SDL_Quit();
                 break;
         }
     }
-    return my_cards.at(0);
+
+    bool waiting_for_piece = true;
+
+    Piece* chosen_piece;
+
+    while(waiting_for_piece) {
+        Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Piece");
+        textbox.draw(renderer);
+        SDL_RenderPresent(renderer);
+        SDL_Event event;
+        SDL_WaitEvent(&event);
+        switch(event.type) {
+            case SDL_MOUSEMOTION:
+                MouseX = event.motion.x;
+                MouseY = event.motion.y;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+            {
+                if(restart_turn_button.in_click_range(MouseX, MouseY)) {
+                    return make_move(board, renderer); // Start the turn over
+                }
+                int chosen_x = 4 - (board -> get_square_from_mouse(MouseX, MouseY).x);
+                int chosen_y = 4 - (board -> get_square_from_mouse(MouseX, MouseY).y);
+
+                for(Piece* p : my_pieces) { // Iterate through my pieces to see if any have that position
+                    if(p -> get_x() == chosen_x && p -> get_y() == chosen_y) {
+                        chosen_piece = p;
+                        waiting_for_piece = false;
+                    }
+                }
+                break;
+            }
+            case SDL_QUIT:
+                SDL_Quit();
+                break;
+        }
+    }
+
+    bool waiting_for_move = true;
+
+    while(waiting_for_move) {
+        Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Space");
+        textbox.draw(renderer);
+        SDL_RenderPresent(renderer);
+        SDL_Event event;
+        SDL_WaitEvent(&event);
+        switch(event.type) {
+            case SDL_MOUSEMOTION:
+                MouseX = event.motion.x;
+                MouseY = event.motion.y;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+            {
+                if(restart_turn_button.in_click_range(MouseX, MouseY)) {
+                    return make_move(board, renderer); // Start the turn over
+                }
+                int chosen_x = 4 - (board -> get_square_from_mouse(MouseX, MouseY).x);
+                int chosen_y = 4 - (board -> get_square_from_mouse(MouseX, MouseY).y);
+
+                move m = {chosen_x - chosen_piece->get_x(), chosen_y - chosen_piece->get_y()};
+                // Try a series of checks to ensure this is an okay move
+                if(!(chosen_card -> is_valid_move(m))) { // Check if the move is on the card we've selected
+                    printf("Move not on card.\n");
+                    break;
+                }
+                printf("Move on card.\n");
+                if(chosen_x < 0 || chosen_x > 4 || chosen_y < 0 || chosen_y > 4) { // Check if the move is on the board
+                    printf("Move not on board.\n");
+                    break;
+                }
+                printf("Move on board.\n");
+                for(Piece* p : my_pieces) { // Iterate through our pieces
+                    if(p -> get_x() == chosen_x && p -> get_y() == chosen_y) { // Ensure that we aren't landing on any of them
+                        printf("We're intersecting a piece.\n");
+                        break;
+                    }
+                }
+                printf("Space is free.\n");
+
+                chosen_piece -> make_move(m);
+                waiting_for_move = false;
+                break;
+            }
+            case SDL_QUIT:
+                SDL_Quit();
+                break;
+        }
+    }
+    return chosen_card;
 }

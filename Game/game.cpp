@@ -27,12 +27,8 @@ Game::~Game() {
 
 // Play one round of Onitama
 int Game::play_round() {
-    if(visual_mode) { // Draw to screen
-        board -> draw(renderer);
-        SDL_RenderPresent(renderer);
-    }
     Player* current_player = turn ? player1 : player2; // Whose turn is it?
-    Card* selected_card = current_player -> make_move(); // Figure out that player's move
+    Card* selected_card = current_player -> make_move(board, renderer); // Figure out that player's move
     board -> swap_cards(selected_card); // Exchange their played card for the neutral card
     turn = !turn; // Reverse the turn for next time
     board -> set_turn(turn); // Tell the board that we've switched sides
@@ -41,6 +37,15 @@ int Game::play_round() {
 
 // Play a full game of Onitama
 Player* Game::play_game() {
-    play_round();
+    while(true) {
+        if(visual_mode) {
+            SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
+            SDL_RenderClear(renderer);
+            board -> draw(renderer);
+            SDL_RenderPresent(renderer);
+        }
+
+        play_round();
+    }
     return nullptr;
 }

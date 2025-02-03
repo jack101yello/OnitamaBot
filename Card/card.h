@@ -21,6 +21,7 @@ class Card {
         bool is_valid_move(move m);
         int get_index() { return index; }
         const char* get_name() { return name; }
+        std::vector<move> get_moves() { return moves; }
         bool operator==(const Card& other) const {
             return this -> index == other.index;
         }

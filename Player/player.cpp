@@ -4,6 +4,6 @@ Player::Player() {
     
 }
 
-Card* Player::make_move() {
+Card* Player::make_move(Board* board, SDL_Renderer* renderer) {
     return nullptr;
 }

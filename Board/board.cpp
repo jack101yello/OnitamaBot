@@ -126,3 +126,36 @@ int Board::get_game_status() {
     */
    return 0;
 }
+
+/*
+Return whether or not a mouse click would intersect a card.
+left_card is true if the card we are checking is the left card
+and it is false if the card we are checking is the right card.
+Only the player whose turn it is can have their cards clicked.
+*/
+bool Board::card_clicked(int MouseX, int MouseY, bool left_card) {
+    int card_width = (int)(2 * square_size);
+    int card_height = (int)(1.5 * square_size);
+    int card_horizontal_gap = (int)(card_width + 0.5 * square_size);
+    int card_vertical_gap = (int)(card_height + 0.125 * square_size);
+    int card_left_gap = (int)(0.25 * square_size);
+    int card_area_start = board_x + 5*square_size;
+
+    int card_x = (left_card) ? card_area_start + card_left_gap : card_area_start + card_left_gap + card_horizontal_gap;
+    int card_y = board_y + 2 * card_vertical_gap;
+
+    return MouseX >= card_x && MouseX <= card_x + card_width && MouseY >= card_y && MouseY <= card_y + card_height;
+}
+
+move Board::get_square_from_mouse(int MouseX, int MouseY) {
+    int x = (MouseX - board_x) / square_size;
+    int y = (MouseY - board_y) / square_size;
+    return (move){x, y};
+}
+
+move Board::get_move_from_mouse(int piece_x, int piece_y, int MouseX, int MouseY) {
+    int selected_board_x = get_square_from_mouse(MouseX, MouseY).x;
+    int selected_board_y = get_square_from_mouse(MouseX, MouseY).y;
+
+    return (move){selected_board_x - piece_x, selected_board_y - piece_y};
+}

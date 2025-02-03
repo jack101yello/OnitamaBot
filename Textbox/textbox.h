@@ -13,7 +13,7 @@ class Textbox {
         TTF_Font* font;
     
     public:
-        Textbox(int x_i, int y_i, int w_i, int h_i, unsigned char r_i, unsigned char g_i, unsigned char b_i, unsigned char tr_i, unsigned char tg_i, unsigned char tb_i, const char* message_i, TTF_Font* font_i);
+        Textbox(int x_i, int y_i, int w_i, int h_i, unsigned char r_i, unsigned char g_i, unsigned char b_i, unsigned char tr_i, unsigned char tg_i, unsigned char tb_i, const char* message_i);
         ~Textbox();
         void draw(SDL_Renderer* renderer);
         int get_x() { return rect.x; }

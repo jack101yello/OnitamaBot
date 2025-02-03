@@ -36,3 +36,9 @@ void Piece::draw(SDL_Renderer* renderer, bool current_player) {
     SDL_Rect piece_rect = {get_screen_x(current_player), get_screen_y(current_player), (int)(square_size * 0.5), (int)(square_size * 0.5)};
     SDL_RenderFillRect(renderer, &piece_rect);
 }
+
+// Move the piece according to a given move
+void Piece::make_move(move m) {
+    x += m.x;
+    y += m.y;
+}

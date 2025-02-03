@@ -1,7 +1,7 @@
 #include "button.h"
 
-Button::Button(int x_i, int y_i, int w_i, int h_i, const char* message_i, TTF_Font* font) {
-    textbox = new Textbox(x_i, y_i, w_i, h_i, 0x80, 0x80, 0x80, 0xff, 0xff, 0xff, message_i, font);
+Button::Button(int x_i, int y_i, int w_i, int h_i, const char* message_i) {
+    textbox = new Textbox(x_i, y_i, w_i, h_i, 0x80, 0x80, 0x80, 0xff, 0xff, 0xff, message_i);
 }
 
 Button::~Button() {
@@ -12,7 +12,7 @@ void set_message(const char* new_message) {
 
 }
 
-void Button::draw(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
+void Button::draw(SDL_Renderer* renderer) {
     textbox -> draw(renderer);
 }
 
