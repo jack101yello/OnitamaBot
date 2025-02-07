@@ -32,7 +32,7 @@ void Piece::draw(SDL_Renderer* renderer, bool current_player) {
     if(!is_alive) {
         return;
     }
-    SDL_SetRenderDrawColor(renderer, (is_king) ? 0xff : 0x00, (side) ? 0xff : 0x00, (side) ? 0x00 : 0xff, 0xff);
+    SDL_SetRenderDrawColor(renderer, (side ? 0x80 : 0x00) + (is_king && side ? 0xff-0x80 : 0x00), is_king ? 0x80 : 0x00, (!side ? 0x80 : 0x00) + (is_king && !side ? 0xff-0x80 : 0x00), 0xff);
     SDL_Rect piece_rect = {get_screen_x(current_player), get_screen_y(current_player), (int)(square_size * 0.5), (int)(square_size * 0.5)};
     SDL_RenderFillRect(renderer, &piece_rect);
 }

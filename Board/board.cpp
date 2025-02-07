@@ -45,13 +45,21 @@ Board::~Board() {
 // Draw the board to the screen
 void Board::draw(SDL_Renderer* renderer) {
     // Draw board
-    SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 0xff);
+    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 0xff);
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
             SDL_Rect square_rect = {i * square_size + board_x, j * square_size + board_y, square_size, square_size};
             SDL_RenderDrawRect(renderer, &square_rect);
         }
     }
+
+    // Draw side indicator
+    SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 0xff);
+    SDL_Rect player_indicator = {board_x + 2*square_size, turn ? board_y-5 : board_y+5*square_size, square_size, 5};
+    SDL_RenderFillRect(renderer, &player_indicator);
+    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xff, 0xff);
+    player_indicator = {board_x + 2*square_size, turn ? board_y+5*square_size : board_y-5, square_size, 5};
+    SDL_RenderFillRect(renderer, &player_indicator);
 
     // Draw pieces
     for(long unsigned int i = 0; i < player1_pieces.size(); i++) {

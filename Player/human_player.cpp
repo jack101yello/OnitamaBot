@@ -125,6 +125,13 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
                 // Try a series of checks to ensure this is an okay move
                 if(!(chosen_card -> is_valid_move(m))) { // Check if the move is on the card we've selected
                     printf("Move not on card.\n");
+                    #ifdef DEBUGGING_MODE
+                    printf("The %d card has the following moves:", chosen_card -> get_index());
+                    for(move mv : chosen_card -> get_moves()) {
+                        printf(" (%d, %d)", mv.x, mv.y);
+                    }
+                    printf("\n");
+                    #endif
                     break;
                 }
                 printf("Move on card.\n");
