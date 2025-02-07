@@ -1,3 +1,5 @@
+#define DEBUGGING_MODE
+
 #include "human_player.h"
 
 Human_Player::Human_Player() {
@@ -23,10 +25,11 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
 
     Card* chosen_card = nullptr;
 
+    Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Card");
+    textbox.draw(renderer);
+    SDL_RenderPresent(renderer);
+
     while(waiting_for_card) {
-        Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Card");
-        textbox.draw(renderer);
-        SDL_RenderPresent(renderer);
         SDL_Event event;
         SDL_WaitEvent(&event);
         switch(event.type) {
@@ -57,10 +60,11 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
 
     Piece* chosen_piece;
 
+    textbox.change_message("Select a Piece");
+    textbox.draw(renderer);
+    SDL_RenderPresent(renderer);
+
     while(waiting_for_piece) {
-        Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Piece");
-        textbox.draw(renderer);
-        SDL_RenderPresent(renderer);
         SDL_Event event;
         SDL_WaitEvent(&event);
         switch(event.type) {
@@ -92,10 +96,11 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
 
     bool waiting_for_move = true;
 
+    textbox.change_message("Select a Space");
+    textbox.draw(renderer);
+    SDL_RenderPresent(renderer);
+
     while(waiting_for_move) {
-        Textbox textbox(board -> get_board_x(), board->get_board_y() + board->get_square_size()*6, 300, 50, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "Select a Space");
-        textbox.draw(renderer);
-        SDL_RenderPresent(renderer);
         SDL_Event event;
         SDL_WaitEvent(&event);
         switch(event.type) {
@@ -112,6 +117,11 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
                 int chosen_y = 4 - (board -> get_square_from_mouse(MouseX, MouseY).y);
 
                 move m = {chosen_x - chosen_piece->get_x(), chosen_y - chosen_piece->get_y()};
+
+                #ifdef DEBUGGING_MODE
+                printf("Move is (%d, %d)\n", m.x, m.y);
+                #endif
+
                 // Try a series of checks to ensure this is an okay move
                 if(!(chosen_card -> is_valid_move(m))) { // Check if the move is on the card we've selected
                     printf("Move not on card.\n");

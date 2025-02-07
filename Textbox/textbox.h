@@ -20,6 +20,7 @@ class Textbox {
         int get_y() { return rect.y; }
         int get_w() { return rect.w; }
         int get_h() { return rect.h; }
+        void change_message(const char* message_i) { message = message_i; }
 };
 
 #endif

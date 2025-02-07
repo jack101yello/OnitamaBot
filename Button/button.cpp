@@ -17,7 +17,5 @@ void Button::draw(SDL_Renderer* renderer) {
 }
 
 bool Button::in_click_range(int click_x, int click_y) {
-    printf("The mouse clicked at (%d, %d) and the button is from (%d, %d) to (%d, %d).", click_x, click_y, textbox->get_x(), textbox->get_y(), textbox->get_x()+textbox->get_w(), textbox->get_y()+textbox->get_h());
-
     return click_x > textbox -> get_x() && click_x < textbox->get_x() + textbox->get_w() && click_y > textbox->get_y() && click_y < textbox->get_y() + textbox->get_h();
 }

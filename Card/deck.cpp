@@ -7,28 +7,28 @@ Deck::Deck() {
     // Ox
     Card* ox = new Card(0, "Ox", BLUE, "Data/Cards/BMP/Ox.bmp");
     ox -> add_move({0, -1});
-    ox -> add_move({1, 0});
+    ox -> add_move({-1, 0});
     ox -> add_move({0, 1});
     cards.push_back(ox);
     Card* crab = new Card(1, "Crab", BLUE, "Data/Cards/BMP/Crab.bmp");
     crab -> add_move({-2, 0});
-    crab -> add_move({0, -1});
+    crab -> add_move({0, 1});
     crab -> add_move({2, 0});
     cards.push_back(crab);
     Card* horse = new Card(2, "Horse", RED, "Data/Cards/BMP/Horse.bmp");
-    horse -> add_move({-1, 0});
+    horse -> add_move({1, 0});
     horse -> add_move({0, -1});
     horse -> add_move({0, 1});
     cards.push_back(horse);
     Card* cobra = new Card(3, "Cobra", RED, "Data/Cards/BMP/Cobra.bmp");
-    cobra -> add_move({-1, 0});
-    cobra -> add_move({1, -1});
-    cobra -> add_move({1, 1});
+    cobra -> add_move({1, 0});
+    cobra -> add_move({-1, -1});
+    cobra -> add_move({-1, 1});
     cards.push_back(cobra);
     Card* rabbit = new Card(4, "Rabbit", BLUE, "Data/Cards/BMP/Rabbit.bmp");
     rabbit -> add_move({-1, 1});
     rabbit -> add_move({1, -1});
-    rabbit -> add_move({2, 0});
+    rabbit -> add_move({-2, 0});
     cards.push_back(rabbit);
 }
 

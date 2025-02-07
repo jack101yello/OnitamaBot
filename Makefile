@@ -22,7 +22,10 @@ all: $(EXEC)
 
 run: $(EXEC)
 	./$(EXEC)
- 
+
+debug: $(EXEC)
+	gdb $(EXEC)
+
 showfont: showfont.c Makefile
 	$(CC) -o $@ $@.c $(CFLAGS) $(LIBS)
 
@@ -40,4 +43,4 @@ $(OBJS): $(@:.o=.c) $(HDRS) Makefile
 clean:
 	rm -f $(EXEC) $(OBJS)
 
-.PHONY: all run clean
+.PHONY: all run debug clean
