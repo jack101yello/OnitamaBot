@@ -27,6 +27,7 @@ class Player {
         std::vector<Piece*> get_my_pieces() { return my_pieces; }
         std::vector<Card*> get_my_cards() { return my_cards; }
         bool is_legal_move(Card* c, Piece* p, move m);
+        void check_kill(Piece* p);
 
     friend class Human_Player;
 };

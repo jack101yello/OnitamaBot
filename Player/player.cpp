@@ -29,6 +29,14 @@ bool Player::is_legal_move(Card* c, Piece* p, move m) {
             return false;
         }
     }
-    
+
     return true;
+}
+
+void Player::check_kill(Piece* p) {
+    for(Piece* enemy : enemy_pieces) {
+        if(p -> get_x() == 4 - enemy->get_x() && p -> get_y() == 4 - enemy->get_y()) {
+            enemy -> kill();
+        }
+    }
 }

@@ -1,5 +1,3 @@
-#define DEBUGGING_MODE
-
 #include "human_player.h"
 
 Human_Player::Human_Player() {
@@ -81,7 +79,7 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
                 int chosen_y = 4 - (board -> get_square_from_mouse(MouseX, MouseY).y);
 
                 for(Piece* p : my_pieces) { // Iterate through my pieces to see if any have that position
-                    if(p -> get_x() == chosen_x && p -> get_y() == chosen_y) {
+                    if(p -> get_x() == chosen_x && p -> get_y() == chosen_y && p -> get_is_alive()) {
                         chosen_piece = p;
                         waiting_for_piece = false;
                     }
@@ -129,6 +127,7 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
                 }
 
                 chosen_piece -> make_move(m);
+                check_kill(chosen_piece); // Kill any opposing pieces which were there
                 waiting_for_move = false;
                 break;
             }

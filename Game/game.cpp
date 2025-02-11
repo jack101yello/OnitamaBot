@@ -34,6 +34,7 @@ Modes:
 */
 void Game::telemetry_dump(int mode) {
     if(mode & 1) {
+        printf("Card Data\n");
         printf("Player 1 Data:\n");
         printf(" Cards: %d and %d\n", player1 -> get_my_cards().at(0) -> get_index(), player1 -> get_my_cards().at(1) -> get_index());
         printf("Player 2 Data\n");
@@ -44,7 +45,8 @@ void Game::telemetry_dump(int mode) {
         printf(" N Card: %d\n", board -> get_neutral_card() -> get_index());
     }
     if(mode & 2) {
-        // Print piece data
+        printf("Piece Data\n");
+        printf("Player 1 Data:\n");
     }
 }
 
@@ -64,9 +66,6 @@ void Game::update_cards() {
 
 // Play one round of Onitama
 int Game::play_round() {
-
-    telemetry_dump(0x1); // Used for debugging purposes
-
     Player* current_player = turn ? player1 : player2; // Whose turn is it?
     Card* selected_card = current_player -> make_move(board, renderer); // Figure out that player's move
     board -> swap_cards(selected_card); // Exchange their played card for the neutral card

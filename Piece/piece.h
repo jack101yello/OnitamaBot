@@ -25,6 +25,7 @@ class Piece {
         int get_screen_y(bool current_player);
         void make_move(move m);
         void kill() { printf("Kill\n"); is_alive = false; }
+        bool get_is_alive() { return is_alive; }
 };
 
 #endif
