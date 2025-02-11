@@ -26,6 +26,7 @@ class Player {
         virtual Card* make_move(Board* board, SDL_Renderer* renderer);
         std::vector<Piece*> get_my_pieces() { return my_pieces; }
         std::vector<Card*> get_my_cards() { return my_cards; }
+        bool is_legal_move(Card* c, Piece* p, move m);
 
     friend class Human_Player;
 };

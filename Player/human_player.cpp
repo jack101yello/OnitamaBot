@@ -122,31 +122,11 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
                 printf("Move is (%d, %d)\n", m.x, m.y);
                 #endif
 
-                // Try a series of checks to ensure this is an okay move
-                if(!(chosen_card -> is_valid_move(m))) { // Check if the move is on the card we've selected
-                    printf("Move not on card.\n");
-                    #ifdef DEBUGGING_MODE
-                    printf("The %d card has the following moves:", chosen_card -> get_index());
-                    for(move mv : chosen_card -> get_moves()) {
-                        printf(" (%d, %d)", mv.x, mv.y);
-                    }
-                    printf("\n");
-                    #endif
-                    break;
+                // Check that the move is legal
+                if(!is_legal_move(chosen_card, chosen_piece, m)) {
+                    printf("Invalid move.\n");
+                    return make_move(board, renderer); // Start the turn over
                 }
-                printf("Move on card.\n");
-                if(chosen_x < 0 || chosen_x > 4 || chosen_y < 0 || chosen_y > 4) { // Check if the move is on the board
-                    printf("Move not on board.\n");
-                    break;
-                }
-                printf("Move on board.\n");
-                for(Piece* p : my_pieces) { // Iterate through our pieces
-                    if(p -> get_x() == chosen_x && p -> get_y() == chosen_y) { // Ensure that we aren't landing on any of them
-                        printf("We're intersecting a piece.\n");
-                        break;
-                    }
-                }
-                printf("Space is free.\n");
 
                 chosen_piece -> make_move(m);
                 waiting_for_move = false;
