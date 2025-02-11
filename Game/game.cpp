@@ -86,7 +86,17 @@ Player* Game::play_game() {
             SDL_RenderPresent(renderer);
         }
 
-        play_round();
+        int round_result = play_round(); // Play another round
+        switch(round_result) {
+            case 0:
+                break;
+            case -1:
+                return player1;
+                break;
+            case 1:
+                return player2;
+                break;
+        }
     }
     return nullptr;
 }

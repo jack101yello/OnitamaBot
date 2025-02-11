@@ -8,6 +8,7 @@
 
 class Player {
     private:
+        int index;
         std::vector<Piece*> my_pieces;
         std::vector<Piece*> enemy_pieces;
         std::vector<Card*> my_cards;
@@ -15,7 +16,7 @@ class Player {
         Card* neutral_card;
 
     public:
-        Player();
+        Player(int index_i);
         virtual ~Player() {}
         // The setters are to be used by the Game to inform us of the current board state
         void set_my_pieces(std::vector<Piece*> my_pieces_i) { my_pieces = my_pieces_i; }
@@ -28,6 +29,7 @@ class Player {
         std::vector<Card*> get_my_cards() { return my_cards; }
         bool is_legal_move(Card* c, Piece* p, move m);
         void check_kill(Piece* p);
+        int get_index() { return index; }
 
     friend class Human_Player;
 };

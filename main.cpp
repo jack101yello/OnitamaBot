@@ -138,8 +138,8 @@ void check_close(SDL_Window* window) {
 void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     bool running = true;
 
-    Human_Player* p1 = new Human_Player;
-    Human_Player* p2 = new Human_Player;
+    Human_Player* p1 = new Human_Player(1);
+    Human_Player* p2 = new Human_Player(2);
     Game game(p1, p2, 150, renderer);
 
     #ifdef VISUAL_MODE
@@ -148,17 +148,14 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     game.set_visual_mode(false):
     #endif
 
-    game.play_game();
-
-    while(running) { // In future, this will probably just be Game::play_game(), which itself will contain a loop
-        check_close(window);
-
-        SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
-        SDL_RenderClear(renderer);
-
-        game.play_game();
-        
-        SDL_RenderPresent(renderer);
+    Player* winner = game.play_game();
+    switch(winner -> get_index()) {
+        case 1:
+            printf("Player 1 won!\n");
+            break;
+        case 2:
+            printf("Player 2 won!\n");
+            break;
     }
 
     delete p1;

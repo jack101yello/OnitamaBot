@@ -1,7 +1,7 @@
 #include "player.h"
 
-Player::Player() {
-    
+Player::Player(int index_i) {
+    index = index_i;
 }
 
 Card* Player::make_move(Board* board, SDL_Renderer* renderer) {

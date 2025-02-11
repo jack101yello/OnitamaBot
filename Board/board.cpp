@@ -128,11 +128,32 @@ Return value:
 1 - Player 2 victory
 */
 int Board::get_game_status() {
-    /*
-    This method is to be implemented.
-    The goal is to check the board to see if one of the players has won.
-    */
-   return 0;
+    // Check player 1's king
+    for(Piece* p : player1_pieces) {
+        if(!(p -> get_is_king())) {
+            continue; // That piece isn't the king
+        }
+        if(!(p -> get_is_alive())) { // Player 1's king is dead
+            return 1;
+        }
+        if(p -> get_x() == 2 && p -> get_y() == 4) { // Player 1's king has reached the goal
+            return -1;
+        }
+    }
+    // Check player 2's king
+    for(Piece* p : player2_pieces) {
+        if(!(p -> get_is_king())) {
+            continue; // That piece isn't the king
+        }
+        if(!(p -> get_is_alive())) { // Player 2's king is dead
+            return -1;
+        }
+        if(p -> get_x() == 2 && p -> get_y() == 4) { // Player 2's king has reached the goal
+            return 1;
+        }
+    }
+
+    return 0; // Neither player has won yet
 }
 
 /*

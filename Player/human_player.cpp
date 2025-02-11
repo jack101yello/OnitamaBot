@@ -1,6 +1,6 @@
 #include "human_player.h"
 
-Human_Player::Human_Player() {
+Human_Player::Human_Player(int index_i) : Player(index_i) {
 
 }
 

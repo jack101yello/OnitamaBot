@@ -11,7 +11,7 @@ class Human_Player : public Player {
     private:
 
     public:
-        Human_Player();
+        Human_Player(int index_i);
         ~Human_Player();
         Card* make_move(Board* board, SDL_Renderer* renderer);
 };
