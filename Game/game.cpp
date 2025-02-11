@@ -25,13 +25,55 @@ Game::~Game() {
     delete board;
 }
 
+/*
+Output the game telemetry from all perspectives.
+Modes:
+1 - Card Data
+2 - Piece Data
+3 - Card & Piece Data
+*/
+void Game::telemetry_dump(int mode) {
+    if(mode & 1) {
+        printf("Player 1 Data:\n");
+        printf(" Cards: %d and %d\n", player1 -> get_my_cards().at(0) -> get_index(), player1 -> get_my_cards().at(1) -> get_index());
+        printf("Player 2 Data\n");
+        printf(" Cards: %d and %d\n", player2 -> get_my_cards().at(0) -> get_index(), player2 -> get_my_cards().at(1) -> get_index());
+        printf("Board Data:\n");
+        printf(" P1 Cards: %d and %d\n", board -> get_player1_cards().at(0) -> get_index(), board -> get_player1_cards().at(1) -> get_index());
+        printf(" P2 Cards: %d and %d\n", board -> get_player2_cards().at(0) -> get_index(), board -> get_player2_cards().at(1) -> get_index());
+        printf(" N Card: %d\n", board -> get_neutral_card() -> get_index());
+    }
+    if(mode & 2) {
+        // Print piece data
+    }
+}
+
+// Update the players' cards to what the board tells them they are
+void Game::update_cards() {
+    /* 
+    This method could be done away with if the players and the board instead dealt with
+    pointers to vectors of their cards and pieces. This may make things easier, but it
+    seems a little inelegant and would require quite a few changes. Perhaps try it later
+    once things are working better, but it isn't a priority.
+    */
+    player1 -> set_my_cards(board -> get_player1_cards());
+    player1 -> set_enemy_cards(board -> get_player2_cards());
+    player2 -> set_my_cards(board -> get_player2_cards());
+    player2 -> set_enemy_cards(board -> get_player1_cards());
+}
+
 // Play one round of Onitama
 int Game::play_round() {
+
+    telemetry_dump(0x1); // Used for debugging purposes
+
     Player* current_player = turn ? player1 : player2; // Whose turn is it?
     Card* selected_card = current_player -> make_move(board, renderer); // Figure out that player's move
     board -> swap_cards(selected_card); // Exchange their played card for the neutral card
+    update_cards();
     turn = !turn; // Reverse the turn for next time
     board -> set_turn(turn); // Tell the board that we've switched sides
+
     return board -> get_game_status(); // Check if someone has won
 }
 

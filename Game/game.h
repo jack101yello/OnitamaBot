@@ -20,6 +20,8 @@ class Game {
         int play_round();
         Player* play_game();
         void set_visual_mode(bool visual_mode_i) {visual_mode = visual_mode_i; };
+        void telemetry_dump(int mode);
+        void update_cards();
 };
 
 #endif
