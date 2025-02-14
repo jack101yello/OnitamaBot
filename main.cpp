@@ -9,6 +9,8 @@
 #include "Gameplay/Game/game.h"
 #include "Player/Player/player.h"
 #include "Player/HumanPlayer/human_player.h"
+#include "Player/Bot/Bot.h"
+#include "Player/Bot/ImpatientBot/ImpatientBot.h"
 
 #define WIDTH 1800
 #define HEIGHT 1000
@@ -57,7 +59,7 @@ int main(int argc, char* argv[]) {
     int MouseY;
 
     #ifdef SKIP_MENU_MODE
-    player_vs_player(win, renderer);
+    player_vs_computer(win, renderer);
     #else
     while(main_menu) {
         // Clear screen
@@ -166,9 +168,30 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
     bool running = true;
 
-    while(running) {
-        check_close(window);
+    Human_Player* human = new Human_Player(1);
+    ImpatientBot* bot = new ImpatientBot(2);
+
+    Game game(human, bot, 150, renderer);
+
+    #ifdef VISUAL_MODE
+    game.set_visual_mode(true);
+    #else
+    game.set_visual_mode(false);
+    #endif
+
+    Player* winner = game.play_game();
+
+    switch(winner -> get_index()) {
+        case 1:
+            printf("The human won!\n");
+            break;
+        case 2:
+            printf("The bot won!\n");
+            break;
     }
+
+    delete human;
+    delete bot;
 }
 
 void computer_training(SDL_Window* window, SDL_Renderer* renderer) {

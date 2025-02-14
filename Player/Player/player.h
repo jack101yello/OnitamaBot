@@ -32,6 +32,8 @@ class Player {
         int get_index() { return index; }
 
     friend class Human_Player;
+    friend class Bot;
+    friend class ImpatientBot;
 };
 
 #endif
