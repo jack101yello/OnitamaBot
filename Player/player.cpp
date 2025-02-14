@@ -24,12 +24,14 @@ bool Player::is_legal_move(Card* c, Piece* p, move m) {
 
     // Check that are aren't intersecting our own piece
     for(Piece* other : my_pieces) {
+        if(!other->get_is_alive()) { // We shouldn't care about intersecting a dead piece.
+            continue;
+        }
         if(m.x + p->get_x() == other -> get_x() && m.y + p->get_y() == other -> get_y()) {
             printf("Move intersects our own piece.\n");
             return false;
         }
     }
-
     return true;
 }
 
