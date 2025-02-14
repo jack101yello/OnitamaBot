@@ -2,9 +2,9 @@
 #define __player_H
 
 #include <vector>
-#include "../Piece/piece.h"
-#include "../Card/card.h"
-#include "../Board/board.h"
+#include "../../Gameplay/Piece/piece.h"
+#include "../../Gameplay/Card/card.h"
+#include "../../Gameplay/Board/board.h"
 
 class Player {
     private:

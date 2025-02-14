@@ -2,7 +2,7 @@
 #define __game_H
 
 #include <SDL2/SDL.h>
-#include "../Player/player.h"
+#include "../../Player/Player/player.h"
 #include "../Board/board.h"
 
 class Game {

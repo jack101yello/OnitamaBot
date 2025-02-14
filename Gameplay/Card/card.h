@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <SDL2/SDL.h>
-#include "../Types/types.h"
+#include "../../Types/types.h"
 
 class Card {
     private:

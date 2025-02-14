@@ -3,12 +3,12 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "Board/board.h"
-#include "Button/button.h"
-#include "Textbox/textbox.h"
-#include "Game/game.h"
-#include "Player/player.h"
-#include "Player/human_player.h"
+#include "Gameplay/Board/board.h"
+#include "Graphics/Button/button.h"
+#include "Graphics/Textbox/textbox.h"
+#include "Gameplay/Game/game.h"
+#include "Player/Player/player.h"
+#include "Player/HumanPlayer/human_player.h"
 
 #define WIDTH 1800
 #define HEIGHT 1000
@@ -116,6 +116,7 @@ int main(int argc, char* argv[]) {
     #endif
 
     quit(win);
+    SDL_Quit();
 
     return 0;
 }

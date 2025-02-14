@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <random>
 #include "card.h"
-#include "../Types/types.h"
+#include "../../Types/types.h"
 
 class Deck {
     private:

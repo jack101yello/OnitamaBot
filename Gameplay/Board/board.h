@@ -4,10 +4,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <vector>
-#include "../Piece/piece.h"
-#include "../Card/card.h"
-#include "../Card/deck.h"
-#include "../Types/types.h"
+#include "../../Gameplay/Piece/piece.h"
+#include "../../Gameplay/Card/card.h"
+#include "../../Gameplay/Card/deck.h"
+#include "../../Types/types.h"
 
 class Board {
     private:
