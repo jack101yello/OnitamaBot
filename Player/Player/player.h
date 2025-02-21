@@ -34,6 +34,7 @@ class Player {
     friend class Human_Player;
     friend class Bot;
     friend class ImpatientBot;
+    friend class MatrixBot;
 };
 
 #endif

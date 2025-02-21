@@ -11,6 +11,7 @@
 #include "Player/HumanPlayer/human_player.h"
 #include "Player/Bot/Bot.h"
 #include "Player/Bot/ImpatientBot/ImpatientBot.h"
+#include "Player/Bot/MatrixBot/MatrixBot.h"
 
 #define WIDTH 1800
 #define HEIGHT 1000
@@ -59,7 +60,7 @@ int main(int argc, char* argv[]) {
     int MouseY;
 
     #ifdef SKIP_MENU_MODE
-    player_vs_computer(win, renderer);
+    computer_training(win, renderer);
     #else
     while(main_menu) {
         // Clear screen
@@ -68,9 +69,9 @@ int main(int argc, char* argv[]) {
 
         // Print buttons to screen
         mainmenu_title.draw(renderer);
-        pvp_button.draw(renderer, font);
-        pvc_button.draw(renderer, font);
-        cvc_button.draw(renderer, font);
+        pvp_button.draw(renderer);
+        pvc_button.draw(renderer);
+        cvc_button.draw(renderer);
 
         // Make choice
         int game_mode = -1;
@@ -139,8 +140,6 @@ void check_close(SDL_Window* window) {
 }
 
 void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
-    bool running = true;
-
     Human_Player* p1 = new Human_Player(1);
     Human_Player* p2 = new Human_Player(2);
     Game game(p1, p2, 150, renderer);
@@ -163,13 +162,13 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
 
     delete p1;
     delete p2;
+
+    SDL_Quit();
 }
 
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
-    bool running = true;
-
     Human_Player* human = new Human_Player(1);
-    ImpatientBot* bot = new ImpatientBot(2);
+    MatrixBot* bot = new MatrixBot(2);
 
     Game game(human, bot, 150, renderer);
 
@@ -192,10 +191,33 @@ void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
 
     delete human;
     delete bot;
+
+    SDL_Quit();
 }
 
 void computer_training(SDL_Window* window, SDL_Renderer* renderer) {
     bool running = true;
+
+    int number_combatants = 4;
+
+    std::vector<MatrixBot*> combatants;
+    for(int i = 0; i < number_combatants; i++) {
+        combatants.push_back(new MatrixBot(pow(10, i)));
+    }
+
+    // This constitutes one round of the tournament:
+    std::sort(combatants.begin(), combatants.end(), [renderer](Player* p1, Player* p2) {
+        Game g(p1, p2, 150, renderer);
+        Player* winner = g.play_game();
+        if(winner -> get_index() == p1 -> get_index()) {
+            return true;
+        }
+        return false;
+    });
+
+    // Cull the losers
+    // Repopulate
+    // Repeat
 
     while(running) {
         check_close(window);
