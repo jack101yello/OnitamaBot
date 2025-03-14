@@ -4,7 +4,7 @@ MatrixBot::MatrixBot(int index_i) : Bot(index_i) {
     num_offspring = 0;
     std::vector<std::vector<float>> transition_matrix_i;
 
-    for(int i = 0; i < 100; i++) {
+    for(int i = 0; i < 125; i++) {
         std::vector<float> row;
         for(int j = 0; j < 20; j++) {
             row.push_back((float)rand() / RAND_MAX); // Make random number between 0 and 1
@@ -101,17 +101,19 @@ std::vector<float> MatrixBot::get_output_vector() {
             output_vector.at(i) += input_vector.at(j) * transition_matrix.at(i).at(j);
         }
     }
+    
     return output_vector;
 }
 
 
-Piece* MatrixBot::get_piece_from_index(int index) {
-    return my_pieces.at(index/20);
+Piece* MatrixBot::get_piece_from_index(long unsigned int index) {
+    return my_pieces.at(index/25);
 }
 
-move MatrixBot::get_move_from_index(int index) {
-    index /= 5;
-    return {(index % 5) - get_piece_from_index(index) -> get_x(), (index / 5) - get_piece_from_index(index) -> get_y()};
+move MatrixBot::get_move_from_index(long unsigned int index) {
+    int x = (index%25)/5 - get_piece_from_index(index)->get_x();
+    int y = index%5 - get_piece_from_index(index)->get_y();
+    return {x, y};
 }
 
 /*
@@ -123,28 +125,30 @@ weighted legal move.
 Card* MatrixBot::make_move(Board* board, SDL_Renderer* renderer) {
     wait(2000);
 
+    SDL_Event e;
+    SDL_PollEvent(&e);
+    if(e.type == SDL_QUIT) {
+        SDL_Quit();
+    }
+
     // Find the highest-weight legal move
     std::vector<float> weights = get_output_vector();
-    float w = weights.at(0);
+    float w = -100;
     Card* c;
     Piece* p;
     move m;
 
     for(long unsigned int i = 0; i < weights.size(); i++) {
-        if(weights.at(i) < w) {
+        if(weights.at(i) <= w) {
             continue;
         }
-        if(is_legal_move(my_cards.at(0), get_piece_from_index(i), get_move_from_index(i))) {
-            w = weights.at(i);
-            c = my_cards.at(0);
-            p = get_piece_from_index(i);
-            m = get_move_from_index(i);
-        }
-        else if(is_legal_move(my_cards.at(1), get_piece_from_index(i), get_move_from_index(i))) {
-            w = weights.at(i);
-            c = my_cards.at(1);
-            p = get_piece_from_index(i);
-            m = get_move_from_index(i);
+        for(Card* card : my_cards) {
+            if(is_legal_move(card, get_piece_from_index(i), get_move_from_index(i))) {
+                w = weights.at(i);
+                c = card;
+                p = get_piece_from_index(i);
+                m = get_move_from_index(i);
+            }
         }
     }
 
