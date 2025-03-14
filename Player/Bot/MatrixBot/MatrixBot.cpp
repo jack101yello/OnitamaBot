@@ -106,7 +106,7 @@ std::vector<float> MatrixBot::get_output_vector() {
 
 
 Piece* MatrixBot::get_piece_from_index(int index) {
-    return my_pieces.at(index/5);
+    return my_pieces.at(index/20);
 }
 
 move MatrixBot::get_move_from_index(int index) {
@@ -148,7 +148,9 @@ Card* MatrixBot::make_move(Board* board, SDL_Renderer* renderer) {
         }
     }
 
-    p -> make_move(m);
+    p -> make_move(m); // Move the piece
+    check_kill(p); // Check if the piece has killed something
+
     return c;
 }
 

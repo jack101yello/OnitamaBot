@@ -15,6 +15,11 @@ bool Player::is_legal_move(Card* c, Piece* p, move m) {
         return false;
     }
 
+    // Check that the piece is alive
+    if(!(p->get_is_alive())) {
+        return false;
+    }
+
     // Check that the move is on the board
     if(m.x + p->get_x() < 0 || m.x + p->get_x() > 4 || m.y + p->get_y() < 0 || m.y + p->get_y() > 4) {
         return false;
