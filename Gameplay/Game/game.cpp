@@ -78,6 +78,9 @@ int Game::play_round() {
 
 // Play a full game of Onitama
 Player* Game::play_game() {
+    int maximum_number_of_rounds = -1;
+    int number_of_rounds = 0;
+
     while(true) {
         if(visual_mode) {
             SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
@@ -96,6 +99,10 @@ Player* Game::play_game() {
             case 1:
                 return player2;
                 break;
+        }
+        ++number_of_rounds;
+        if(maximum_number_of_rounds >= 0 && number_of_rounds > maximum_number_of_rounds) { // Ensure that the game does not go on forever
+            return player1;
         }
     }
     return nullptr;
