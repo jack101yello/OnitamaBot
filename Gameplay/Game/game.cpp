@@ -82,6 +82,9 @@ Player* Game::play_game() {
     int number_of_rounds = 0;
 
     while(true) {
+        if(SDL_QuitRequested()) {
+            SDL_Quit();
+        }
         if(visual_mode) {
             SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
             SDL_RenderClear(renderer);
