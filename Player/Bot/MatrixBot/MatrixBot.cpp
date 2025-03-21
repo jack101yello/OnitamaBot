@@ -1,5 +1,6 @@
 #include "MatrixBot.h"
 
+// The basic constructor for a MatrixBot randomizes its transition matrix.
 MatrixBot::MatrixBot(int index_i) : Bot(index_i) {
     num_offspring = 0;
     std::vector<std::vector<float>> transition_matrix_i;
@@ -15,6 +16,7 @@ MatrixBot::MatrixBot(int index_i) : Bot(index_i) {
     transition_matrix = transition_matrix_i;
 }
 
+// Create a new MatrixBot based on a pre-existing transition matrix.
 MatrixBot::MatrixBot(int index_i, std::vector<std::vector<float>> transition_matrix_i) : Bot(index_i) {
     num_offspring = 0;
     transition_matrix = transition_matrix_i;
@@ -123,7 +125,7 @@ relative weight of all possible moves, then picks the highest-
 weighted legal move.
 */
 Card* MatrixBot::make_move(Board* board, SDL_Renderer* renderer) {
-    wait(2000);
+    wait(500);
 
     SDL_Event e;
     SDL_PollEvent(&e);
@@ -171,5 +173,5 @@ MatrixBot* MatrixBot::produce_offspring() {
         new_transition_matrix.push_back(row);
     }
     num_offspring++;
-    return new MatrixBot(index * num_offspring, new_transition_matrix);
+    return new MatrixBot(index, new_transition_matrix);
 }

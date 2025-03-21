@@ -12,6 +12,7 @@
 #include "Player/Bot/Bot.h"
 #include "Player/Bot/ImpatientBot/ImpatientBot.h"
 #include "Player/Bot/MatrixBot/MatrixBot.h"
+#include "Gameplay/Tournament/tournament.h"
 
 #define WIDTH 1800
 #define HEIGHT 1000
@@ -198,35 +199,13 @@ void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
 void computer_training(SDL_Window* window, SDL_Renderer* renderer) {
     bool running = true;
 
-    int number_combatants = 4;
-
-    printf("Creating the first round of combatants.\n");
-    std::vector<MatrixBot*> combatants;
-    for(int i = 0; i < number_combatants; i++) {
-        combatants.push_back(new MatrixBot(i));
-    }
-
-    printf("Commencing a round of the tournament.\n");
-    // This constitutes one round of the tournament:
-    std::sort(combatants.begin(), combatants.end(), [renderer](Player* p1, Player* p2) {
-        Game g(p1, p2, 150, renderer);
-        Player* winner = g.play_game();
-        if(winner -> get_index() == p1 -> get_index()) {
-            return true;
-        }
-        return false;
-    });
-
-    printf("The ranking is:\n");
-    for(long unsigned int i = 0; i < combatants.size(); i++) {
-        printf("%d. %d\n", (int)(i+1), combatants.at(i) -> get_index());
-    }
-
-    // Cull the losers
-    // Repopulate
-    // Repeat
+    Tournament tournament(10);
 
     while(running) {
+        tournament.play_round(renderer);
+        tournament.cull_losers();
+        tournament.repopulate_scoreboard();
+        
         check_close(window);
     }
 }
