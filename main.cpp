@@ -200,11 +200,13 @@ void computer_training(SDL_Window* window, SDL_Renderer* renderer) {
 
     int number_combatants = 4;
 
+    printf("Creating the first round of combatants.\n");
     std::vector<MatrixBot*> combatants;
     for(int i = 0; i < number_combatants; i++) {
-        combatants.push_back(new MatrixBot(pow(10, i)));
+        combatants.push_back(new MatrixBot(i));
     }
 
+    printf("Commencing a round of the tournament.\n");
     // This constitutes one round of the tournament:
     std::sort(combatants.begin(), combatants.end(), [renderer](Player* p1, Player* p2) {
         Game g(p1, p2, 150, renderer);
@@ -214,6 +216,11 @@ void computer_training(SDL_Window* window, SDL_Renderer* renderer) {
         }
         return false;
     });
+
+    printf("The ranking is:\n");
+    for(long unsigned int i = 0; i < combatants.size(); i++) {
+        printf("%d. %d\n", (int)(i+1), combatants.at(i) -> get_index());
+    }
 
     // Cull the losers
     // Repopulate

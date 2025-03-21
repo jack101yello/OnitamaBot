@@ -20,8 +20,6 @@ Game::Game(Player* player1_i, Player* player2_i, int square_size, SDL_Renderer* 
 }
 
 Game::~Game() {
-    delete player1;
-    delete player2;
     delete board;
 }
 
@@ -78,7 +76,8 @@ int Game::play_round() {
 
 // Play a full game of Onitama
 Player* Game::play_game() {
-    int maximum_number_of_rounds = -1;
+    printf("Game started between player %d and player %d.\n", player1->get_index(), player2->get_index());
+    int maximum_number_of_rounds = 10;
     int number_of_rounds = 0;
 
     while(true) {
@@ -97,14 +96,17 @@ Player* Game::play_game() {
             case 0:
                 break;
             case -1:
+                printf("Player %d won the game!\n", player1->get_index());
                 return player1;
                 break;
             case 1:
+                printf("Player %d won the game!\n", player2->get_index());
                 return player2;
                 break;
         }
         ++number_of_rounds;
         if(maximum_number_of_rounds >= 0 && number_of_rounds > maximum_number_of_rounds) { // Ensure that the game does not go on forever
+            printf("Round limit reached. Player %d wins by default.\n", player1->get_index());
             return player1;
         }
     }
