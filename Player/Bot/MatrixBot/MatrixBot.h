@@ -1,6 +1,8 @@
 #ifndef __matrixbot_H
 #define __matrixbot_H
 
+#include <iostream>
+#include <fstream>
 #include "../Bot.h"
 
 class MatrixBot : public Bot {
@@ -15,9 +17,12 @@ class MatrixBot : public Bot {
         public:
         MatrixBot(int index_i);
         MatrixBot(int index_i, std::vector<std::vector<float>> transition_matrix_i);
+        MatrixBot(int index_i, const std::string& filename);
         ~MatrixBot();
         Card* make_move(Board* board, SDL_Renderer* renderer);
         MatrixBot* produce_offspring();
+        void save_data(const std::string& filename);
+        std::vector<std::vector<float>> read_data(const std::string& filename);
 };
 
 #endif

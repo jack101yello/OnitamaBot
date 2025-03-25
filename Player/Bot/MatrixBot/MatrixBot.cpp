@@ -22,6 +22,11 @@ MatrixBot::MatrixBot(int index_i, std::vector<std::vector<float>> transition_mat
     transition_matrix = transition_matrix_i;
 }
 
+// Create a new MatrixBot from a file
+MatrixBot::MatrixBot(int index_i, const std::string& filename) : Bot(index_i) {
+    transition_matrix = read_data(filename);
+}
+
 MatrixBot::~MatrixBot() {
 
 }
@@ -174,4 +179,45 @@ MatrixBot* MatrixBot::produce_offspring() {
     }
     num_offspring++;
     return new MatrixBot(index, new_transition_matrix);
+}
+
+void MatrixBot::save_data(const std::string& filename) {
+    std::ofstream file(filename);
+    if(!file.is_open()) {
+        throw std::runtime_error("Could not open data file.");
+    }
+
+    int rows = transition_matrix.size();
+    int cols = transition_matrix.at(0).size();
+    file << rows << " " << cols << std::endl;
+
+    for(long unsigned int i = 0; i < rows; i++) {
+        for(long unsigned int j = 0; j < cols; j++) {
+            file << transition_matrix[i][j] << " ";
+        }
+        file << std::endl;
+    }
+
+    file.close();
+}
+
+std::vector<std::vector<float>> MatrixBot::read_data(const std::string& filename) {
+    std::ifstream file(filename);
+    if(!file.is_open()) {
+        throw std::runtime_error("Could not read data file.");
+    }
+
+    long unsigned int rows, cols;
+    file >> rows >> cols;
+
+    std::vector<std::vector<float>> matrix(rows, std::vector<float>(cols));
+    for(long unsigned int i = 0; i < rows; i++) {
+        for(long unsigned int j = 0; j < cols; j++) {
+            file >> matrix[i][j];
+        }
+    }
+
+    file.close();
+
+    return matrix;
 }

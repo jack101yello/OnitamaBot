@@ -47,4 +47,8 @@ void Tournament::repopulate_scoreboard() {
     for(long unsigned int i = 0; i < scoreboard.size(); i++) {
         scoreboard.at(i) -> set_index(i); // Re-index everyone for future play
     }
+
+    // Save top player's score
+    const std::string filename = "current_best.dat";
+    scoreboard.at(0) -> save_data(filename);
 }
