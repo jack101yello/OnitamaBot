@@ -4,6 +4,10 @@ Player::Player(int index_i) {
     index = index_i;
 }
 
+void Player::set_enemy_pieces(std::vector<Piece*> enemy_pieces_i) {
+    enemy_pieces = enemy_pieces_i;
+}
+
 Card* Player::make_move(Board* board, SDL_Renderer* renderer) {
     return nullptr;
 }
