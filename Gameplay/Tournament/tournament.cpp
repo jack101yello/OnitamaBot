@@ -38,6 +38,10 @@ void Tournament::play_round(SDL_Renderer* renderer) {
     for(long unsigned int i = 0; i < scoreboard.size(); i++) {
         printf("%d. Player %d\n", (int)(i+1), scoreboard.at(i) -> get_index());
     }
+    for(long unsigned int i = 0; i < scoreboard.size()/2; i++) { // Iterate over the top half of the scoreboard
+        std::string filename = "BotData/bot_" + std::to_string(i) + ".dat";
+        scoreboard.at(i) -> save_data(filename);
+    }
 }
 
 // Remove the players who placed in the bottom half
@@ -57,17 +61,5 @@ void Tournament::repopulate_scoreboard() {
 
     for(long unsigned int i = 0; i < scoreboard.size(); i++) {
         scoreboard.at(i) -> set_index(i); // Re-index everyone for future play
-    }
-
-    /*
-    We now save the top half scores, so that next time we run a tournament,
-    for instance if we turn the program off and run it later, then we can
-    start with half old bots and half randomly-generated new ones. This way,
-    we can persist training across sessions.
-    */
-
-    for(long unsigned int i = 0; i < scoreboard.size()/2; i++) { // Iterate over the top half of the scoreboard
-        std::string filename = "BotData/bot_" + std::to_string(i) + ".dat";
-        scoreboard.at(i) -> save_data(filename);
     }
 }
