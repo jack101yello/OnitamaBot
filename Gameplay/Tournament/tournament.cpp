@@ -8,6 +8,17 @@ Tournament::Tournament(long unsigned int number_combatants) {
     }
 }
 
+Tournament::Tournament(long unsigned int number_combatants, long unsigned int number_saved, const std::string& data_dir) {
+    scoreboard.clear();
+    for(long unsigned int i = 0; i < number_saved; i++) {
+        std::string filename = data_dir + "/bot_" + std::to_string(i) + ".dat";
+        scoreboard.push_back(new MatrixBot(i, filename)); // Read the bot stored in that file
+    }
+    for(long unsigned int i = number_saved; i < number_combatants; i++) {
+        scoreboard.push_back(new MatrixBot(i)); // Make the rest of the bots randomly
+    }
+}
+
 Tournament::~Tournament() {
     scoreboard.clear();
 }
@@ -32,7 +43,7 @@ void Tournament::play_round(SDL_Renderer* renderer) {
 // Remove the players who placed in the bottom half
 void Tournament::cull_losers() {
     printf("Culling losers.\n");
-    for(int i = 0; i < scoreboard.size()/2; i++) {
+    for(long unsigned int i = 0; i < scoreboard.size()/2; i++) {
         scoreboard.pop_back();
     }
 }
@@ -48,7 +59,15 @@ void Tournament::repopulate_scoreboard() {
         scoreboard.at(i) -> set_index(i); // Re-index everyone for future play
     }
 
-    // Save top player's score
-    const std::string filename = "current_best.dat";
-    scoreboard.at(0) -> save_data(filename);
+    /*
+    We now save the top half scores, so that next time we run a tournament,
+    for instance if we turn the program off and run it later, then we can
+    start with half old bots and half randomly-generated new ones. This way,
+    we can persist training across sessions.
+    */
+
+    for(long unsigned int i = 0; i < scoreboard.size()/2; i++) { // Iterate over the top half of the scoreboard
+        std::string filename = "BotData/bot_" + std::to_string(i) + ".dat";
+        scoreboard.at(i) -> save_data(filename);
+    }
 }

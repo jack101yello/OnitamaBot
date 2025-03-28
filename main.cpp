@@ -169,7 +169,7 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
 
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
     Human_Player* human = new Human_Player(1);
-    MatrixBot* bot = new MatrixBot(2);
+    MatrixBot* bot = new MatrixBot(2, "BotData/bot_0.dat");
 
     Game game(human, bot, 150, renderer);
 
