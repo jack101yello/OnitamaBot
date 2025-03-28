@@ -17,8 +17,6 @@ class Tournament {
         Tournament(long unsigned int number_combatants, long unsigned int number_saved, const std::string& data_dir);
         ~Tournament();
         void play_round(SDL_Renderer* renderer);
-        void cull_losers();
-        void repopulate_scoreboard();
 };
 
 #endif

@@ -203,8 +203,6 @@ void computer_training(SDL_Window* window, SDL_Renderer* renderer) {
 
     while(running) {
         tournament.play_round(renderer);
-        tournament.cull_losers();
-        tournament.repopulate_scoreboard();
         
         check_close(window);
     }

@@ -25,6 +25,7 @@ Tournament::~Tournament() {
 
 // Sort all of the players according to ability
 void Tournament::play_round(SDL_Renderer* renderer) {
+    // Play the games
     printf("Commencing a round of the tournamnet.\n");
     std::sort(scoreboard.begin(), scoreboard.end(), [renderer](Player* p1, Player* p2) {
         Game g(p1, p2, 150, renderer); // Create new game
@@ -34,27 +35,28 @@ void Tournament::play_round(SDL_Renderer* renderer) {
         }
         return false; // Player 2 won!
     });
+
+    // Print the scoreboard
     printf("The results:\n");
     for(long unsigned int i = 0; i < scoreboard.size(); i++) {
         printf("%d. Player %d\n", (int)(i+1), scoreboard.at(i) -> get_index());
     }
-    for(long unsigned int i = 0; i < scoreboard.size()/2; i++) { // Iterate over the top half of the scoreboard
+
+    printf("There are %d players.\n", scoreboard.size());
+    
+    // Remove the underperformers
+    printf("Culling losers.\n");
+    scoreboard.erase(scoreboard.begin() + scoreboard.size()/2, scoreboard.end());
+    
+    printf("There are %d players.\n", scoreboard.size());
+
+    // Save the remaining players' scores
+    for(long unsigned int i = 0; i < scoreboard.size(); i++) {
         std::string filename = "BotData/bot_" + std::to_string(i) + ".dat";
         scoreboard.at(i) -> save_data(filename);
     }
-}
 
-// Remove the players who placed in the bottom half
-void Tournament::cull_losers() {
-    printf("Culling losers.\n");
-    for(long unsigned int i = 0; i < scoreboard.size()/2; i++) {
-        scoreboard.pop_back();
-    }
-}
-
-// All of the players remaining on the scoreboard reproduce
-void Tournament::repopulate_scoreboard() {
-    printf("Repopulating scoreboard.\n");
+    // Repopulate the scoreboard
     for(MatrixBot* b : scoreboard) {
         scoreboard.push_back(b -> produce_offspring());
     }
