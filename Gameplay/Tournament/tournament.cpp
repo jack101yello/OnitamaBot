@@ -41,14 +41,10 @@ void Tournament::play_round(SDL_Renderer* renderer) {
     for(long unsigned int i = 0; i < scoreboard.size(); i++) {
         printf("%d. Player %d\n", (int)(i+1), scoreboard.at(i) -> get_index());
     }
-
-    printf("There are %d players.\n", scoreboard.size());
     
     // Remove the underperformers
     printf("Culling losers.\n");
     scoreboard.erase(scoreboard.begin() + scoreboard.size()/2, scoreboard.end());
-    
-    printf("There are %d players.\n", scoreboard.size());
 
     // Save the remaining players' scores
     for(long unsigned int i = 0; i < scoreboard.size(); i++) {

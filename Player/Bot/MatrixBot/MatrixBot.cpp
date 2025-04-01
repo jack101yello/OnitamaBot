@@ -171,7 +171,7 @@ MatrixBot* MatrixBot::produce_offspring() {
     for(long unsigned int i = 0; i < transition_matrix.size(); i++) {
         std::vector<float> row;
         for(long unsigned int j = 0; j < transition_matrix.at(i).size(); j++) {
-            int val = transition_matrix.at(i).at(j); // Get current value
+            float val = transition_matrix.at(i).at(j); // Get current value
             val += (2*((float)rand()/RAND_MAX) - 1) * randomization_margin; // Randomize a little
             row.push_back(val);
         }
@@ -187,8 +187,9 @@ void MatrixBot::save_data(const std::string& filename) {
         throw std::runtime_error("Could not open data file.");
     }
 
-    int rows = transition_matrix.size();
-    int cols = transition_matrix.at(0).size();
+    long unsigned int rows = transition_matrix.size();
+    long unsigned int cols = transition_matrix.at(0).size();
+
     file << rows << " " << cols << std::endl;
 
     for(long unsigned int i = 0; i < rows; i++) {
