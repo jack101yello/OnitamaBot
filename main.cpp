@@ -27,7 +27,7 @@ void quit(SDL_Window* window);
 Select various running modes here
 This is for debugging and developing purposes
 */
-#define SKIP_MENU_MODE
+// #define SKIP_MENU_MODE
 #define VISUAL_MODE
 
 int main(int argc, char* argv[]) {
@@ -164,7 +164,13 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     delete p1;
     delete p2;
 
-    SDL_Quit();
+    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 0xff);
+    SDL_RenderClear(renderer);
+    Textbox GameOver(WIDTH/4, HEIGHT/4, WIDTH/2, HEIGHT/2, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "GAME OVER");
+    
+    for(;;) {
+        check_close(window);
+    }
 }
 
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
@@ -190,10 +196,16 @@ void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
             break;
     }
 
+    SDL_SetRenderDrawColor(renderer, 0x00, 0xff, 0x00, 0xff);
+    SDL_RenderClear(renderer);
+    Textbox GameOver(WIDTH/4, HEIGHT/4, WIDTH/2, HEIGHT/2, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, "GAME OVER");
+
     delete human;
     delete bot;
 
-    SDL_Quit();
+    for(;;) {
+        check_close(window);
+    }
 }
 
 void computer_training(SDL_Window* window, SDL_Renderer* renderer) {
