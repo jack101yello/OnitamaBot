@@ -1,7 +1,12 @@
 #ifndef __game_H
 #define __game_H
 
+#include "../../modes.h"
+
+#ifdef VISUAL_MODE
 #include <SDL2/SDL.h>
+#endif
+
 #include "../../Player/Player/player.h"
 #include "../Board/board.h"
 

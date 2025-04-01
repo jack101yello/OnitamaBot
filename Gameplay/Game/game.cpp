@@ -77,10 +77,11 @@ int Game::play_round() {
 // Play a full game of Onitama
 Player* Game::play_game() {
     printf("Game started between player %d and player %d.\n", player1->get_index(), player2->get_index());
-    int maximum_number_of_rounds = 100;
+    int maximum_number_of_rounds = 5;
     int number_of_rounds = 0;
 
     while(true) {
+        #ifdef VISUAL_MODE
         if(SDL_QuitRequested()) {
             SDL_Quit();
         }
@@ -90,6 +91,7 @@ Player* Game::play_game() {
             board -> draw(renderer);
             SDL_RenderPresent(renderer);
         }
+        #endif
 
         int round_result = play_round(); // Play another round
         switch(round_result) {

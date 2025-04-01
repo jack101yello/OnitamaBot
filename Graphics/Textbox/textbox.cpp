@@ -1,5 +1,7 @@
 #include "textbox.h"
 
+#ifdef VISUAL_MODE
+
 Textbox::Textbox(int x_i, int y_i, int w_i, int h_i, unsigned char r_i, unsigned char g_i, unsigned char b_i, unsigned char tr_i, unsigned char tg_i, unsigned char tb_i, const char* message_i) {
     rect = {x_i, y_i, w_i, h_i};
     box_color = {r_i, g_i, b_i, 0xff};
@@ -24,3 +26,5 @@ void Textbox::draw(SDL_Renderer* renderer) {
     SDL_Texture* text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
     SDL_RenderCopy(renderer, text_texture, NULL, &rect);
 }
+
+#endif

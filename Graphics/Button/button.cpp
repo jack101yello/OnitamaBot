@@ -1,5 +1,7 @@
 #include "button.h"
 
+#ifdef VISUAL_MODE
+
 Button::Button(int x_i, int y_i, int w_i, int h_i, const char* message_i) {
     textbox = new Textbox(x_i, y_i, w_i, h_i, 0x80, 0x80, 0x80, 0xff, 0xff, 0xff, message_i);
 }
@@ -12,10 +14,14 @@ void set_message(const char* new_message) {
 
 }
 
+#ifdef VISUAL_MODE
 void Button::draw(SDL_Renderer* renderer) {
     textbox -> draw(renderer);
 }
+#endif
 
 bool Button::in_click_range(int click_x, int click_y) {
     return click_x > textbox -> get_x() && click_x < textbox->get_x() + textbox->get_w() && click_y > textbox->get_y() && click_y < textbox->get_y() + textbox->get_h();
 }
+
+#endif

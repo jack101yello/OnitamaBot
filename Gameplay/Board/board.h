@@ -1,8 +1,12 @@
 #ifndef __board_H
 #define __board_H
 
+#include "../../modes.h"
+
+#ifdef VISUAL_MODE
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#endif
 #include <vector>
 #include "../../Gameplay/Piece/piece.h"
 #include "../../Gameplay/Card/card.h"
@@ -25,7 +29,9 @@ class Board {
     public:
         Board(int square_size_i);
         ~Board();
+        #ifdef VISUAL_MODE
         void draw(SDL_Renderer* renderer);
+        #endif
         std::vector<Piece*> get_player1_pieces() { return player1_pieces; }
         std::vector<Piece*> get_player2_pieces() { return player2_pieces; }
         std::vector<Card*> get_player1_cards() { return player1_cards; }

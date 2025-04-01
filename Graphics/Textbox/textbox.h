@@ -1,10 +1,15 @@
 #ifndef __textbox_H
 #define __textbox_H
 
+#include "../../modes.h"
+
+#ifdef VISUAL_MODE
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#endif
 
 class Textbox {
+    #ifdef VISUAL_MODE
     private:
         SDL_Rect rect;
         SDL_Color box_color;
@@ -21,6 +26,7 @@ class Textbox {
         int get_w() { return rect.w; }
         int get_h() { return rect.h; }
         void change_message(const char* message_i) { message = message_i; }
+    #endif
 };
 
 #endif

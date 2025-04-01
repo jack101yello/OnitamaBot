@@ -1,5 +1,7 @@
 #include "human_player.h"
 
+#ifdef VISUAL_MODE
+
 Human_Player::Human_Player(int index_i) : Player(index_i) {
 
 }
@@ -138,3 +140,5 @@ Card* Human_Player::make_move(Board* board, SDL_Renderer* renderer) {
     }
     return chosen_card;
 }
+
+#endif

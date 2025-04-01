@@ -1,7 +1,13 @@
+#include "modes.h"
+
+#ifdef VISUAL_MODE
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
+#else
+struct SDL_Window {};
+#endif
 
 #include "Gameplay/Board/board.h"
 #include "Graphics/Button/button.h"
@@ -23,14 +29,12 @@ void computer_training(SDL_Window* window, SDL_Renderer* renderer);
 void check_close(SDL_Window* window);
 void quit(SDL_Window* window);
 
-/*
-Select various running modes here
-This is for debugging and developing purposes
-*/
-// #define SKIP_MENU_MODE
-#define VISUAL_MODE
 
 int main(int argc, char* argv[]) {
+    #ifndef VISUAL_MODE
+    computer_training(nullptr, nullptr);
+
+    #else
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("Error initializing SDL: %s\n", SDL_GetError());
     }
@@ -122,6 +126,8 @@ int main(int argc, char* argv[]) {
     quit(win);
     SDL_Quit();
 
+    #endif
+
     return 0;
 }
 
@@ -141,6 +147,7 @@ void check_close(SDL_Window* window) {
 }
 
 void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
+    #ifdef VISUAL_MODE
     Human_Player* p1 = new Human_Player(1);
     Human_Player* p2 = new Human_Player(2);
     Game game(p1, p2, 150, renderer);
@@ -148,7 +155,7 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     #ifdef VISUAL_MODE
     game.set_visual_mode(true);
     #else
-    game.set_visual_mode(false):
+    game.set_visual_mode(false);
     #endif
 
     Player* winner = game.play_game();
@@ -171,9 +178,11 @@ void player_vs_player(SDL_Window* window, SDL_Renderer* renderer) {
     for(;;) {
         check_close(window);
     }
+    #endif
 }
 
 void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
+    #ifdef VISUAL_MODE
     Human_Player* human = new Human_Player(1);
     MatrixBot* bot = new MatrixBot(2, "BotData/bot_0.dat");
 
@@ -206,6 +215,7 @@ void player_vs_computer(SDL_Window* window, SDL_Renderer* renderer) {
     for(;;) {
         check_close(window);
     }
+    #endif
 }
 
 void computer_training(SDL_Window* window, SDL_Renderer* renderer) {

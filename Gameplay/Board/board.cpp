@@ -42,6 +42,7 @@ Board::~Board() {
     player2_pieces.clear();
 }
 
+#ifdef VISUAL_MODE
 // Draw the board to the screen
 void Board::draw(SDL_Renderer* renderer) {
     // Draw board
@@ -99,6 +100,7 @@ void Board::draw(SDL_Renderer* renderer) {
     r = {card_area_start + card_left_gap + (int)(0.25 * (card_width + card_horizontal_gap)), board_y + card_vertical_gap, card_width, card_height};
     SDL_RenderCopy(renderer, card_image_texture, NULL, &r);
 }
+#endif
 
 // Swap the passed card with the neutral card
 void Board::swap_cards(Card* selected_card) {
